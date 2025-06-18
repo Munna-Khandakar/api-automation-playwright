@@ -1,5 +1,4 @@
 import {test, expect} from "@playwright/test";
-import {text} from "node:stream/consumers";
 
 test("GET: User Profile", async ({request}) => {
     const response = await request.get("https://reqres.in/api/users/2");
