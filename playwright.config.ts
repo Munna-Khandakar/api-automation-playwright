@@ -17,7 +17,7 @@ export default defineConfig({
         trace: 'on-first-retry',
         baseURL: "https://ideas.ideascale.me",
         extraHTTPHeaders:{
-            "api_token": "1928750f-cb38-4812-9f1d-6214f88fe6b1"
+            "api_token": "###API-KEY###"
         }
     },
 
