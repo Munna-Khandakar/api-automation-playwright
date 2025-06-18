@@ -1,6 +1,7 @@
 import {defineConfig, devices} from '@playwright/test';
+import {TestOptions} from "./src/fixtures/request-fixture";
 
-export default defineConfig({
+export default defineConfig<TestOptions>({
     testDir: './src/tests',
 
     fullyParallel: true,
@@ -15,16 +16,30 @@ export default defineConfig({
 
     use: {
         trace: 'on-first-retry',
-        baseURL: "https://ideas.ideascale.me",
-        extraHTTPHeaders:{
-            "api_token": "###API-KEY###"
-        }
     },
 
     projects: [
         {
-            name: 'chromium',
-            use: {...devices['Desktop Chrome']},
+            name: 'ideas',
+            use: {
+                baseURL: "https://ideas.ideascale.me",
+                api_tokens: {
+                    SUPERUSER_API_TOKEN: "#",
+                    MODERATOR_API_TOKEN: "#",
+                },
+                ...devices['Desktop Chrome']
+            },
+        },
+        {
+            name: 'unit',
+            use: {
+                baseURL: "https://ideas.ideascale.me",
+                api_tokens: {
+                    SUPERUSER_API_TOKEN: "#",
+                    MODERATOR_API_TOKEN: "#",
+                },
+                ...devices['Desktop Chrome']
+            },
         },
     ],
 });
