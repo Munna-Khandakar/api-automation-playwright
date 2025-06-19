@@ -2,7 +2,7 @@ import {test as base} from '@playwright/test';
 import {TestConfig} from "@type/TestConfig";
 import {CustomAPIRequestContext} from "@type/CustomAPIRequestContext";
 
-const basePath = '/a/rest/v1';
+const basePath = '/a/rest';
 
 export const test = base.extend<TestConfig & { request: CustomAPIRequestContext }>({
     api_tokens: [{
