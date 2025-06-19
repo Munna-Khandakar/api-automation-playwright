@@ -6,8 +6,8 @@ const basePath = '/a/rest/v1';
 
 export const test = base.extend<TestConfig & { request: CustomAPIRequestContext }>({
     api_tokens: [{
-        SUPERUSER_API_TOKEN: "",
-        MODERATOR_API_TOKEN: ""
+        SUPERUSER: "",
+        MODERATOR: ""
     }, {option: true}],
 
     // Override the built-in request fixture to prepend the common base path
