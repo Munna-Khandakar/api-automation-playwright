@@ -1,7 +1,6 @@
 # API Automation
 
-This repository contains Playwright-based API automation tests for APIs which are used for Integration with other apps.
-
+This repository contains automated API test suites built with Playwright, validating integration endpoints for seamless interoperability with third-party applications.
 ## Installation
 
 Install dependencies:
