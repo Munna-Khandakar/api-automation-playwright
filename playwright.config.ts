@@ -24,8 +24,9 @@ export default defineConfig<TestConfig>({
             use: {
                 baseURL: "https://ideas.ideascale.me",
                 api_tokens: {
-                    SUPERUSER_API_TOKEN: "#",
-                    MODERATOR_API_TOKEN: "#",
+                    SUPERUSER: "#",
+                    MODERATOR: "#",
+                    ADMIN: "#",
                 },
                 ...devices['Desktop Chrome']
             },
@@ -35,8 +36,9 @@ export default defineConfig<TestConfig>({
             use: {
                 baseURL: "https://ideas.ideascale.me",
                 api_tokens: {
-                    SUPERUSER_API_TOKEN: "#",
-                    MODERATOR_API_TOKEN: "#",
+                    SUPERUSER: "#",
+                    MODERATOR: "#",
+                    ADMIN: "#",
                 },
                 ...devices['Desktop Chrome']
             },

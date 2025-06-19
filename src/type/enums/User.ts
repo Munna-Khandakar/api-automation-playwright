@@ -1,4 +1,5 @@
 export enum USER {
     SUPERUSER = "SUPERUSER",
     MODERATOR = "MODERATOR",
+    ADMIN = "ADMIN",
 }
