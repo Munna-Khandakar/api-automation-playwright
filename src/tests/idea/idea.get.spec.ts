@@ -63,7 +63,7 @@ test.describe("GET", () => {
         }
     });
 
-    test.only("Get draft idea form", async ({request, api_tokens}) => {
+    test("Get draft idea form", async ({request, api_tokens}) => {
         const ideaId = 49495;
         for (const [userType, token] of Object.entries(api_tokens)) {
             await test.step(userType, async () => {
