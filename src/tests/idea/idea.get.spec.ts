@@ -57,7 +57,7 @@ test.describe("GET", () => {
                 const data = response.data;
                 ArrayAssertionUtil.expectNonEmptyArray(data);
                 ArrayAssertionUtil.expectArrayWithFieldValue(data, "title", "This is a daft Idea");
-                ArrayAssertionUtil.expectArrayWithFieldValue(data, "submitterId", "17409");
+                ArrayAssertionUtil.expectArrayWithFieldValue(data, "submitterId", 17409);
                 ArrayAssertionUtil.expectArrayWithFieldValue(data, "canDelete", true);
             })
         }
@@ -78,6 +78,30 @@ test.describe("GET", () => {
         }
     });
 
+    test("Get idea tags for idea form", async ({request, api_tokens}) => {
+        for (const [userType, token] of Object.entries(api_tokens)) {
+            await test.step(userType, async () => {
+                const apiResponse = await request.token(token).get("/idea-form/ideas/tags");
+                expect(apiResponse.status()).toBe(200);
+                const response = await apiResponse.json();
+                const content = response.content;
+                ArrayAssertionUtil.expectNonEmptyArray(content);
+
+            })
+        }
+    });
+
+    test("Get custom labels for idea form", async ({request, api_tokens}) => {
+        for (const [userType, token] of Object.entries(api_tokens)) {
+            await test.step(userType, async () => {
+                const apiResponse = await request.token(token).get("/idea-form/labels");
+                expect(apiResponse.status()).toBe(200);
+                const response = await apiResponse.json();
+                const data = response.data;
+                ArrayAssertionUtil.expectNonEmptyArray(data);
+            })
+        }
+    });
 
     test("Get idea link qualifiers", async ({request, api_tokens}) => {
         for (const [userType, token] of Object.entries(api_tokens)) {
