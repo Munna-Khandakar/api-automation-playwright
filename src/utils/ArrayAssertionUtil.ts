@@ -39,4 +39,13 @@ export class ArrayAssertionUtil {
         const hasFieldValue = array.some(item => item[field] === expectedValue);
         expect(hasFieldValue).toBe(true);
     }
+
+    static expectArrayContains(value: unknown, expected: string | string[]) {
+        expect(Array.isArray(value)).toBe(true);
+        const array = value as Array<unknown>;
+        const expectedValues = Array.isArray(expected) ? expected : [expected];
+        for (const val of expectedValues) {
+            expect(array.includes(val)).toBe(true);
+        }
+    }
 }
