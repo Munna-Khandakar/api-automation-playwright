@@ -1,7 +1,7 @@
 import {defineConfig, devices} from '@playwright/test';
-import {TestOptions} from "./src/fixtures/request-fixture";
+import {TestConfig} from "@type/TestConfig";
 
-export default defineConfig<TestOptions>({
+export default defineConfig<TestConfig>({
     testDir: './src/tests',
 
     fullyParallel: true,
