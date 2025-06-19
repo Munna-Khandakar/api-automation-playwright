@@ -54,23 +54,6 @@ View the HTML test report:
 npm run show-report
 ```
 
-### Running Specific Tests
-
-Run tests for a specific file:
-```bash
-npx playwright test src/tests/api/campaign.spec.ts
-```
-
-Run tests for a specific project:
-```bash
-npx playwright test --project=ideas
-```
-
-Run tests with a specific tag:
-```bash
-npx playwright test --grep "@smoke"
-```
-
 ## Project Structure
 
 ```
