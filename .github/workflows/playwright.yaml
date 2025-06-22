@@ -1,0 +1,68 @@
+name: Playwright Tests
+run-name: Playwright tests on ${{ inputs.instance }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      instance:
+        description: Target instance
+        type: choice
+        required: true
+        options:
+          - stage
+          - test1
+          - test2
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Determine URL prefix
+        id: vars
+        run: |
+          instance='${{ inputs.instance }}'
+          case $instance in
+            stage)
+              echo "prefix=stg" >> "$GITHUB_OUTPUT"
+              ;;
+            test1)
+              echo "prefix=t1" >> "$GITHUB_OUTPUT"
+              ;;
+            test2)
+              echo "prefix=t2" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              exit 1
+              ;;
+          esac
+
+      - name: Wait for test instance to be up and running
+        run: |
+          until $(curl --output /dev/null --silent --head --fail https://reporting.${{ steps.vars.outputs.prefix }}.ideascale.dev/a/sys/status); do
+            printf '.'
+            sleep 5
+          done
+
+      - name: Run Playwright tests
+        env:
+          ENV: ${{ inputs.instance }}
+        run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
