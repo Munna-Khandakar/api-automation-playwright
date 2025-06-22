@@ -30,7 +30,7 @@ export default defineConfig<TestConfig>({
             use: {
                 baseURL: process.env[`${projectName}_BASE_URL`],
                 api_tokens: {
-                    [USER.SUPERUSER]: process.env[`${projectName}_SUPERUSER_API_TOKEN`],
+                    [USER.MEMBER]: process.env[`${projectName}_MEMBER_API_TOKEN`],
                     [USER.MODERATOR]: process.env[`${projectName}_MODERATOR_API_TOKEN`],
                     [USER.ADMIN]: process.env[`${projectName}_ADMIN_API_TOKEN`],
                 },

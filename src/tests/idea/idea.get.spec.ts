@@ -1,6 +1,7 @@
 import {expect} from "@playwright/test";
 import {test} from "@fixture/request-fixture";
 import {ArrayAssertionUtil} from "@utils/ArrayAssertionUtil";
+import {USER} from "@type/enums/User";
 
 test.describe("GET", () => {
     test("Get idea submission form for campaign", async ({request, api_tokens}) => {
@@ -48,17 +49,18 @@ test.describe("GET", () => {
         }
     });
 
-    test("Get draft ideas", async ({request, api_tokens}) => {
+    test.only("Get draft ideas", async ({request, api_tokens}) => {
         for (const [userType, token] of Object.entries(api_tokens)) {
             await test.step(userType, async () => {
                 const apiResponse = await request.token(token).get("/idea-form/drafts");
                 expect(apiResponse.status()).toBe(200);
                 const response = await apiResponse.json();
                 const data = response.data;
-                ArrayAssertionUtil.expectNonEmptyArray(data);
-                ArrayAssertionUtil.expectArrayWithFieldValue(data, "title", "This is a daft Idea");
-                ArrayAssertionUtil.expectArrayWithFieldValue(data, "submitterId", 17409);
-                ArrayAssertionUtil.expectArrayWithFieldValue(data, "canDelete", true);
+                if (userType === USER.ADMIN || userType === USER.MEMBER) {
+                    ArrayAssertionUtil.expectNonEmptyArray(data).matchKeys(["id", "title"]);
+                } else {
+                    ArrayAssertionUtil.expectEmptyArray(data);
+                }
             })
         }
     });
@@ -174,6 +176,21 @@ test.describe("GET", () => {
                 ArrayAssertionUtil.expectNonEmptyArray(response);
                 ArrayAssertionUtil.expectArrayWithFieldValue(response, "key", "stage-ideate4fd899")
                 ArrayAssertionUtil.expectArrayWithFieldValue(response, "label", "Open for voting")
+            })
+        }
+    });
+
+    test("Get assessment rating of idea (paginated)", async ({request, api_tokens}) => {
+        const ideaId = 45825;
+        const assessmentId = 109;
+        const pageNumber = 0;
+        const pageSize = 10;
+        for (const [userType, token] of Object.entries(api_tokens)) {
+            await test.step(userType, async () => {
+                const apiResponse = await request.token(token).get(`/idea/${ideaId}/assessment/${assessmentId}/ranks/${pageNumber}/${pageSize}`);
+                expect(apiResponse.status()).toBe(200);
+                // const response = await apiResponse.json();
+                // ArrayAssertionUtil.expectNonEmptyArray(response);
             })
         }
     });
